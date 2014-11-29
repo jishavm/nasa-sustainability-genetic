@@ -1,0 +1,135 @@
+# Type of fitness/problem to be applied/solved by GA:
+# 1: Maximization of a function defined on real numbers
+#FitnessType = 1
+FitnessType = 6
+
+# Number of individuals in the population
+IndividualsNumber = 100
+
+# Number of generations
+GenerationsNumber = 500
+
+# Termination condition for the evolutionary algorithm:
+# 1: GenerationsNumber is interpreted as the number of generations for the algorithm
+# 2: GenerationsNumber is interpreted as the maximum number of generations allowed without change in the fitness for the best individual
+TerminationConditionType = 1
+
+# Type of population initialization
+# 1: Random
+PopulationInitializationType = 1
+
+# Type of parent selection (method of constructing the mating pool):
+# 1: Random (with replacement)
+# 2: Ranking selection (linear)
+# 3: Tournament selection
+ParentSelectionType = 1
+
+# Expected number of offspring alloted to the fittest individual (just in case of linear ranking selection). Range: [1,2]
+ExpectedOffspringNumberForFittestIndividual = 2
+
+# Tournament size (just in case of tournament selection). Range: [2, IndividualsNumber].
+TournamentSize = 2
+
+# Type of crossover:
+# 1: One-point crossover
+# 2: Two-point crossover
+# 3: N-point crossover
+# 4: Parameterized uniform crossover
+# 5: Whole arithmetic recombination (biased through alpha disruption, which is deterministic and needs to be established below)
+# 6: Whole arithmetic recombination (unbiased through alpha disruption, which is stochastic and does not need to be established below)
+CrossoverType = 4
+
+# Crossover rate
+# CrossoverRate = 1
+CrossoverRate = 0.1
+
+# Number of crossover points (just in case of N-point crossover). Range: [1, GenesNumber-1]
+CrossoverPointsNumber = 3
+
+# Exchange probability (just in case of Parameterized Uniform Crossover)
+ExchangeProbability = 0.5
+
+# Degree of disruption for recombination (just in case of Whole Arithmetic Recombination). Range [0, 1]
+AlphaDisruption = 0.01
+
+# Type of mutation:
+# 1: Uniform mutation
+# 2: Gaussian mutation
+MutationType = 2
+
+# Mutation rate
+# MutationRate = 0.2
+# MutationRate = 0.3
+MutationRate = 0.03
+
+# Sigma step size (or standard deviation for the Gaussian mutation) (just in case of Gaussian mutation)
+SigmaStepSize = 0.25
+
+# Type of crowding:
+# 1: Deterministic replacement
+# 2: Probabilistic replacement
+# 3: Hybrid replacement
+# 4: Boltzmann replacement
+# 5: Metropolis replacement
+# 6: Generalized probabilistic replacement
+CrowdingType = 6
+
+# Parameter S for crowding: (see paper 'The crowding approach to niching in genetic algorithms')
+# S: even number of parents (with S>=2) in tournament
+S = 2
+
+# Parameters related to the cooling schedule applied, just in the case of Boltzmann or Metropolis replacements
+InitialTemperature = 1e-15
+CoolingPeriod = 666
+CoolingConstant = 1e-3
+
+# Initial value for the scaling factor parameter (just in case of generalized crowding)
+# InitialScalingFactor = 1.25
+InitialScalingFactor = 1
+
+# Schedule for the scaling factor parameter (just in case of generalized crowding)
+# 1: Constant scaling factor
+# 2: Scaling factor lowered through population entropy
+# 3: Exponentially-decaying scaling factor
+# 4: Self-adaptive scaling factor
+# 5: Feedback control scaling factor
+ScheduleType = 5
+
+# Decay constant for the scaling factor (just in case of generalized crowding and exponentially-decaying lowering schedule). Must be <=1.
+DecayConstant = 0.999
+
+# Type of survivor selection:
+# 1: Generational model 
+# 2: Steady state model
+# 3: (mu+lambda) selection
+# 4: (mu,lambda) selection
+SurvivorSelectionType = 1
+
+# Number of new child candidate individuals for next generation (just in case of (mu+lambda) or (mu,lambda) survivor selection)
+# Must be equal or greater than the number of individuals if survivor selection type is (mu,lambda)
+# It is recommended that mu/lambda = 1/7
+Lambda = 40
+
+# Elitism (just in case of generational model for survivor selection)
+# 1: ON
+# 2: OFF
+Elitism = 1
+
+# Clustering
+# 1: k means clustering (k means clustering)
+# 2: k means clustering with cross validation
+# 3: k means clustering with largest delta (copy of k means clustering 1)
+# 3: k means clustering with largest change (k means clustering 1)
+ClusteringType = 1
+
+# Number of Clusters
+NumberOfClusters = 5
+
+# Control Frequency
+ControlFrequency = 1
+
+# Control Parameters
+ControlParameter = 0.01
+
+# Generational gap (just in case of steady state model for survivor selection). Range: [1, IndividualsNumber].
+GenerationalGap = 5
