@@ -1,0 +1,6 @@
+*.class
+*.log
+*.cache
+*.classpath
+*.prefs
+bin/
