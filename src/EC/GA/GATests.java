@@ -233,12 +233,18 @@ public class GATests
       switch(pr.populationInitializationTypeReadFromFile) 
       {
          case RANDOM_POPULATION_INITIALIZATION: 
-            populationInitializationType = new RandomPopulationInitialization(pr.individualsNumberReadFromFile, 
+           /* populationInitializationType = new RandomPopulationInitialization(pr.individualsNumberReadFromFile, 
                                                                               FunctionDefinedOnRealNumbers.functionDimension,
                                                                               FunctionDefinedOnRealNumbers.x_i, 
                                                                               FunctionDefinedOnRealNumbers.x_f,
                                                                               pr.initialScalingFactorReadFromFile); // Maximum scaling factor for self-adaptive crowding
-             break;
+            */
+        	 populationInitializationType = new GetPopulationFromFile(pr.individualsNumberReadFromFile, 
+                     FunctionDefinedOnRealNumbers.functionDimension,
+                     FunctionDefinedOnRealNumbers.x_i, 
+                     FunctionDefinedOnRealNumbers.x_f,
+                     pr.initialScalingFactorReadFromFile);
+        	 break;
          default:
             populationInitializationType = null;
                                                                                                                      

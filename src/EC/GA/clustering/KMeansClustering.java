@@ -115,6 +115,7 @@ public class KMeansClustering extends GAClustering
 	public  double performClustering(GAPopulation population, int K, boolean print)
 	{
 		// cluster and its entries
+		System.out.println("reached clustering");
 		int[][] clusters = new int[K][population.individuals.length];
 		int[] cards = new int[K];
 		// center of the clusters

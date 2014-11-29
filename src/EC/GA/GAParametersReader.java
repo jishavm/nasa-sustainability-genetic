@@ -119,7 +119,8 @@ public class GAParametersReader
             fitnessTypeReadFromFile = Integer.parseInt(properties.getProperty("FitnessType"));
             
             System.out.println(fitnessTypeReadFromFile);
-            if(fitnessTypeReadFromFile<1 || fitnessTypeReadFromFile>1) 
+            //if(fitnessTypeReadFromFile<1 || fitnessTypeReadFromFile>1)
+            if(fitnessTypeReadFromFile<1 || fitnessTypeReadFromFile>2) 
             {
                System.out.println("Fitness type in file " + fileName + " is out of range.");
                status = false;
@@ -185,7 +186,10 @@ public class GAParametersReader
          try 
          {
             populationInitializationTypeReadFromFile = Integer.parseInt(properties.getProperty("PopulationInitializationType"));
-            if(populationInitializationTypeReadFromFile<1 || populationInitializationTypeReadFromFile>1) 
+           // if(populationInitializationTypeReadFromFile<1 || populationInitializationTypeReadFromFile>1) 
+            //Jisha:Commented the above line and added below
+            if(populationInitializationTypeReadFromFile<1 || populationInitializationTypeReadFromFile>2) 
+
             {
                System.out.println("Population initialization type in file " + fileName + " is out of range.");
                status = false;
