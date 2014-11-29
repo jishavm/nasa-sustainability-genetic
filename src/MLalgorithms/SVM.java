@@ -1,4 +1,5 @@
 package MLalgorithms;
+import weka.classifiers.Evaluation;
 import weka.classifiers.functions.SMOreg;
 import weka.core.Instances;
 import weka.core.Utils;
@@ -24,12 +25,13 @@ public class SVM {
 //		SMOreg smoreg = new SMOreg();
 //		smoreg.buildClassifier(data);
 		
-		String inputFilePath = "C:\\Users\\AbyM\\Dropbox\\Statistical Discovery and Learning\\Datasubsets\\RandomFeatureSet13.csv";
+		String trainFilePath = "C:\\Users\\AbyM\\Dropbox\\Statistical Discovery and Learning\\Datasubsets\\RandomFeatureSet13Train.csv";
+		String testFilePath = "C:\\Users\\AbyM\\Dropbox\\Statistical Discovery and Learning\\Datasubsets\\RandomFeatureSet13Test.csv";
 				
 		try {
 			
 			CSVLoader loader = new CSVLoader();
-		    loader.setSource(new File(inputFilePath));
+		    loader.setSource(new File(trainFilePath));
 		    Instances data = loader.getDataSet();
 		    data.setClassIndex(data.numAttributes()-1);
 			
@@ -45,6 +47,14 @@ public class SVM {
 			model.buildClassifier(data);
 			
 			System.out.println(model.toString());
+			
+			loader.setSource(new File(testFilePath));
+		    Instances testData = loader.getDataSet();
+		    testData.setClassIndex(testData.numAttributes()-1);
+			
+			Evaluation evaluation = new Evaluation(testData);
+			evaluation.evaluateModel(model, testData);
+			System.out.println(evaluation.correlationCoefficient());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
