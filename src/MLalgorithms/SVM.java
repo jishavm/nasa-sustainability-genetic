@@ -6,15 +6,17 @@ import weka.core.Utils;
 import weka.core.converters.CSVLoader;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.core.*;
+import weka.filters.Filter;
+import weka.filters.unsupervised.attribute.Remove;
 
 import java.io.*;
 
 public class SVM {
 	public static void main(String args[]) throws Exception{
-		svm();
+		svm(new double[]{1, 0, 1, 1, 0, 1, 1, 1, 0});
 	}
 	
-	public static double svm() throws Exception{
+	public static double svm(double[] featureSet) throws Exception{
 		
 //		CSVLoader loader = new CSVLoader();
 //		loader.setSource(new File("/Users/jishavm/Documents/datasets/dataset6.csv"));
@@ -25,15 +27,39 @@ public class SVM {
 //		SMOreg smoreg = new SMOreg();
 //		smoreg.buildClassifier(data);
 		
-		String trainFilePath = "/Users/jishavm/Downloads/RandomFeatureSet13Train.csv";
-		String testFilePath = "/Users/jishavm/Downloads/RandomFeatureSet13Test.csv";
+		/* Data preparation.
+		 *  1. Load the csv files of both train and test data sets
+		 *  2. Loop through the featureSet to set the filters of both train and test sets
+		*/
+		
+		String trainFilePath = "C:\\Users\\AbyM\\Dropbox\\Statistical Discovery and Learning\\Datasubsets\\RandomFeatureSet13Train.csv";
+		String testFilePath = "C:\\Users\\AbyM\\Dropbox\\Statistical Discovery and Learning\\Datasubsets\\RandomFeatureSet13Test.csv";
 				
 		try {
 			
 			CSVLoader loader = new CSVLoader();
 		    loader.setSource(new File(trainFilePath));
-		    Instances data = loader.getDataSet();
-		    data.setClassIndex(data.numAttributes()-1);
+		    Instances trainData = loader.getDataSet();
+		    
+		    String[] options = new String[2];
+		    options[0] = "-R";
+		    options[1] = "";
+		    
+		    for(int i = 0; i < featureSet.length; i++)
+		    {
+		    	if(featureSet[i] == 0)
+		    	{
+		    		options[1] += options[1].length() == 0 ? (i+1) : "," + (i+1);
+		    	}
+		    }
+		    
+		    Remove remove = new Remove();
+		    remove.setOptions(options);                           
+		    remove.setInputFormat(trainData);
+		    Instances filteredtrainData = Filter.useFilter(trainData, remove); 
+		    
+		    
+		    filteredtrainData.setClassIndex(filteredtrainData.numAttributes()-1);
 			
 			SMOreg model = new weka.classifiers.functions.SMOreg();
 			
@@ -44,16 +70,20 @@ public class SVM {
 //			svmOptions += " -d " + saveName;
 			
 			//model.setOptions(weka.core.Utils.splitOptions(svmOptions));
-			model.buildClassifier(data);
+			model.buildClassifier(filteredtrainData);
 			
 			System.out.println(model.toString());
 			
 			loader.setSource(new File(testFilePath));
 		    Instances testData = loader.getDataSet();
-		    testData.setClassIndex(testData.numAttributes()-1);
+		    
+		    remove.setInputFormat(testData);
+		    Instances filteredTestData = Filter.useFilter(testData, remove);
+		    
+		    filteredTestData.setClassIndex(filteredTestData.numAttributes()-1);
 			
-			Evaluation evaluation = new Evaluation(testData);
-			evaluation.evaluateModel(model, testData);
+			Evaluation evaluation = new Evaluation(filteredTestData);
+			evaluation.evaluateModel(model, filteredTestData);
 			System.out.println(evaluation.correlationCoefficient());
 			return evaluation.correlationCoefficient();
 			

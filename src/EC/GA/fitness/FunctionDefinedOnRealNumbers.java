@@ -81,7 +81,7 @@ public class FunctionDefinedOnRealNumbers extends GAFitness
             break;
          case 6:
 		try {
-			result = new MLalgorithms.SVM().svm();
+			result = new MLalgorithms.SVM().svm(x);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
