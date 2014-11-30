@@ -13,10 +13,10 @@ import java.io.*;
 
 public class SVM {
 	public static void main(String args[]) throws Exception{
-		svm(new double[]{1, 0, 1, 1, 0, 1, 1, 1, 0});
+		//svm(new double[]{1, 0, 1, 1, 0, 1, 1, 1, 0});
 	}
 	
-	public static double svm(double[] featureSet) throws Exception{
+	public  double svm(double[] featureSet) throws Exception{
 		
 //		CSVLoader loader = new CSVLoader();
 //		loader.setSource(new File("/Users/jishavm/Documents/datasets/dataset6.csv"));
@@ -32,8 +32,8 @@ public class SVM {
 		 *  2. Loop through the featureSet to set the filters of both train and test sets
 		*/
 		
-		String trainFilePath = "C:\\Users\\AbyM\\Dropbox\\Statistical Discovery and Learning\\Datasubsets\\RandomFeatureSet13Train.csv";
-		String testFilePath = "C:\\Users\\AbyM\\Dropbox\\Statistical Discovery and Learning\\Datasubsets\\RandomFeatureSet13Test.csv";
+		String trainFilePath = "/Users/jishavm/Downloads/RandomFeatureSet13Train.csv";
+		String testFilePath = "/Users/jishavm/Downloads/RandomFeatureSet13Test.csv";
 				
 		try {
 			
@@ -72,7 +72,7 @@ public class SVM {
 			//model.setOptions(weka.core.Utils.splitOptions(svmOptions));
 			model.buildClassifier(filteredtrainData);
 			
-			System.out.println(model.toString());
+			//System.out.println(model.toString());
 			
 			loader.setSource(new File(testFilePath));
 		    Instances testData = loader.getDataSet();

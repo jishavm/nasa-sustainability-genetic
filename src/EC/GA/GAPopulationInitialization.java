@@ -1,5 +1,7 @@
 package EC.GA;
 
+import java.util.HashMap;
+
 /**
  * Initializes a population.
  * <p>

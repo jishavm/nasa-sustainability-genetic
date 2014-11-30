@@ -21,7 +21,8 @@ import EC.tools.*;
  */
 public class GATests
 {
-   // Fitness type
+	
+	// Fitness type
 
    /** Constant indicating the maximization of a function defined on real numbers: 1 */
    public static final int FUNCTION_DEFINED_ON_REAL_NUMBERS = 1;

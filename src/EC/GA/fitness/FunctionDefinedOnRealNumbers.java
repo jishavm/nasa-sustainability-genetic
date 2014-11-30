@@ -15,7 +15,7 @@ public class FunctionDefinedOnRealNumbers extends GAFitness
    // The parameters that the user must specify are represented with "<user>" at the beginning of their comment line
    
    /** Dimension of the function, typed by the user */
-   public static final int functionDimension = 1; //<user> 
+   public static final int functionDimension = 10; //<user> 
 
 
 
@@ -81,7 +81,20 @@ public class FunctionDefinedOnRealNumbers extends GAFitness
             break;
          case 6:
 		try {
-			result = new MLalgorithms.SVM().svm(x);
+			/*for(int j=0;j<x.length;j++){
+				System.out.println(x[j]);
+
+			}*/
+			
+			//if(fitnessMap.containsKey(x)){
+				//result = fitnessMap.get(x);
+		//	}
+			//else{
+				result = new MLalgorithms.SVM().svm(x);
+				//fitnessMap.put(x, result);
+			//}
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -1,5 +1,7 @@
 package EC.GA;
 
+import java.util.HashMap;
+
 /**
  * Calculates the fitness values assigned to individuals.
  * <p>

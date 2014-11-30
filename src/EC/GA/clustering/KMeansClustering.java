@@ -15,6 +15,15 @@ public class KMeansClustering extends GAClustering
 	{
 		//int currentNumberOfClusters = setpoint;
 		//performClustering(population,setpoint);
+		System.out.println("Start of clustering");
+		for(int h=0;h<population.individuals.length;h++){
+			String bit = "";
+			for(int f=0;f<population.individuals[h].variables.length;f++){
+				bit+=population.individuals[h].variables[f]+",";
+				}
+			
+			System.out.println(bit);
+		}
 		double[] Deviation = new double[10];
 		double[] Delta = new double[9];
 		int currentNumberOfClusters = 1;
@@ -97,13 +106,14 @@ public class KMeansClustering extends GAClustering
 		//for(int k=0; k<2*setpoint; k++)
 			//System.out.println(Deviation[k]);
 		//
+		System.out.println(currentNumberOfClusters);
 		return currentNumberOfClusters;		
 	}
 	
 	public  double performClustering(GAPopulation population, int K, boolean print)
 	{
 		// cluster and its entries
-		System.out.println("reached clustering");
+		//System.out.println("reached clustering");
 		int[][] clusters = new int[K][population.individuals.length];
 		int[] cards = new int[K];
 		// center of the clusters
@@ -152,7 +162,6 @@ public class KMeansClustering extends GAClustering
 		for(int k=0; k<K; k++)
 			for(int j=0; j<population.individuals[0].variables.length; j++)
 			{
-				System.out.println(cards[k]);
 				for(int i=0; i<cards[k]; i++)
 					sums[k].variables[j] = sums[k].variables[j]+population.individuals[clusters[k][i]].variables[j];
 				center[k].variables[j] = sums[k].variables[j]/cards[k];

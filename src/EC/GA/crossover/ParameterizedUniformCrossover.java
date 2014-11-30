@@ -47,7 +47,15 @@ public class ParameterizedUniformCrossover extends GACrossover
     */
    public void performCrossover(GAPopulation population) 
    {
-      Random random = new Random();
+      /*System.out.println("population before crossover");
+      for(int i=0;i<population.individuals.length;i++){
+    	  for(int j=0;j<population.individuals[0].variables.length;j++){
+    		  System.out.println(population.individuals[i].variables[j]);
+    	  }
+    	  System.out.println(" ");
+      }*/
+	   System.out.println("crossover");
+	  Random random = new Random();
       ArrayList<Integer> individualsToBeMated = new ArrayList<Integer>(); // Stores indexes of individuals to be mated
       GAIndividual parent1, parent2;
       int secondParentToBeMatedPosition; // Position in individualsToBeMated of the second parent

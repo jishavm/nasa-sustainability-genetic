@@ -3,6 +3,10 @@ package EC.GA.populationInitialization;
 import EC.GA.*;
 import EC.GA.fitness.*;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -60,14 +64,49 @@ public class GetPopulationFromFile extends GAPopulationInitialization
 		
 		
 		
-		GAPopulation p = new GAPopulation(5);
 		
 		// Initialize individuals
 		//TODO:Jisha Need to read the data from file here
-		for(int i=0; i<3; i++) 
+		
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("/Users/jishavm/Documents/workspace/proj/src/EC/GA/populationInitialization/population"));
+			
+			String input = br.readLine();
+			int g=0;
+			
+			while(input!=null){
+				GAIndividual gi = new GAIndividual();
+				gi.variables = new double[individualsNumber];
+				
+				String attributes[] = input.split(",");
+				for(int i=0;i<attributes.length;i++){
+					gi.variables[i] = Double.parseDouble(attributes[i]);
+					
+				}
+				
+				newPopulation.individuals[g] = gi;
+				System.out.println("population length"+newPopulation.individuals.length);
+				System.out.println("g :"+g);
+
+				
+				fitness.evaluate(newPopulation.individuals[g]); 
+				g++;
+				input = br.readLine();
+			}
+			
+			
+		} catch (Exception e) {
+			System.out.println(e);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		
+		
+		/*for(int i=0; i<individualsNumber; i++) 
 		{
 			GAIndividual gi = new GAIndividual();
 			gi.variables = new double[10];
+			
 			for(int m=0;m<variablesNumber;m++){
 				gi.variables[m] = 1;
 			}
@@ -79,7 +118,7 @@ public class GetPopulationFromFile extends GAPopulationInitialization
 			System.out.println(fitness.getClass());
 			
 			fitness.evaluate(newPopulation.individuals[i]); 
-		}
+		}*/
 
 		newPopulation.variablesLowerBounds = variablesLowerBounds;   
 		newPopulation.variablesUpperBounds = variablesUpperBounds;

@@ -1,13 +1,13 @@
 # Type of fitness/problem to be applied/solved by GA:
 # 1: Maximization of a function defined on real numbers
-FitnessType = 1
-#FitnessType = 6
+#FitnessType = 1
+FitnessType = 6
 
 # Number of individuals in the population
-IndividualsNumber = 100
+IndividualsNumber = 10
 
 # Number of generations
-GenerationsNumber = 500
+GenerationsNumber = 20
 
 # Termination condition for the evolutionary algorithm:
 # 1: GenerationsNumber is interpreted as the number of generations for the algorithm

@@ -1,5 +1,7 @@
 package EC.GA;
 
+import java.util.HashMap;
+
 /**
  * Handles mutation of the individuals in the population.
  * <p>

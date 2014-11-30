@@ -1,7 +1,6 @@
 package EC.GA.populationInitialization;
 
 import EC.GA.*;
-
 import EC.GA.fitness.*;
 
 import java.util.*;
