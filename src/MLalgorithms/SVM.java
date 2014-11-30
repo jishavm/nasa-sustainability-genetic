@@ -32,8 +32,8 @@ public class SVM {
 		 *  2. Loop through the featureSet to set the filters of both train and test sets
 		*/
 		
-		String trainFilePath = "/Users/jishavm/Downloads/RandomFeatureSet13Train.csv";
-		String testFilePath = "/Users/jishavm/Downloads/RandomFeatureSet13Test.csv";
+		String trainFilePath = "C:\\Users\\AbyM\\Dropbox\\Statistical Discovery and Learning\\Datasubsets\\RandomFeatureSet13Train.csv";
+		String testFilePath = "C:\\Users\\AbyM\\Dropbox\\Statistical Discovery and Learning\\Datasubsets\\RandomFeatureSet13Test.csv";
 				
 		try {
 			
@@ -49,17 +49,17 @@ public class SVM {
 		    {
 		    	if(featureSet[i] == 0)
 		    	{
-		    		options[1] += options[1].length() == 0 ? (i+1) : "," + (i+1);
+		    		options[1] += options[1].length() == 0 ? (i+1) : "," + (i+1);	// Set Column numbers to remove
 		    	}
 		    }
 		    
 		    Remove remove = new Remove();
 		    remove.setOptions(options);                           
 		    remove.setInputFormat(trainData);
-		    Instances filteredtrainData = Filter.useFilter(trainData, remove); 
+		    Instances filteredtrainData = Filter.useFilter(trainData, remove);	//Create new filtered data Instance
 		    
 		    
-		    filteredtrainData.setClassIndex(filteredtrainData.numAttributes()-1);
+		    filteredtrainData.setClassIndex(filteredtrainData.numAttributes()-1);	// Set label column
 			
 			SMOreg model = new weka.classifiers.functions.SMOreg();
 			
@@ -70,20 +70,20 @@ public class SVM {
 //			svmOptions += " -d " + saveName;
 			
 			//model.setOptions(weka.core.Utils.splitOptions(svmOptions));
-			model.buildClassifier(filteredtrainData);
+			model.buildClassifier(filteredtrainData);	// Generate model
 			
 			//System.out.println(model.toString());
 			
-			loader.setSource(new File(testFilePath));
+			loader.setSource(new File(testFilePath));	// Set test file data
 		    Instances testData = loader.getDataSet();
 		    
 		    remove.setInputFormat(testData);
-		    Instances filteredTestData = Filter.useFilter(testData, remove);
+		    Instances filteredTestData = Filter.useFilter(testData, remove);	// Create filtered test data
 		    
-		    filteredTestData.setClassIndex(filteredTestData.numAttributes()-1);
+		    filteredTestData.setClassIndex(filteredTestData.numAttributes()-1);	// Set label attribute on test data
 			
 			Evaluation evaluation = new Evaluation(filteredTestData);
-			evaluation.evaluateModel(model, filteredTestData);
+			evaluation.evaluateModel(model, filteredTestData);			// Evaluate model based on test data
 			System.out.println(evaluation.correlationCoefficient());
 			return evaluation.correlationCoefficient();
 			
