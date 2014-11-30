@@ -1,7 +1,7 @@
 # Type of fitness/problem to be applied/solved by GA:
 # 1: Maximization of a function defined on real numbers
 FitnessType = 1
-#FitnessType = 2
+#FitnessType = 6
 
 # Number of individuals in the population
 IndividualsNumber = 100

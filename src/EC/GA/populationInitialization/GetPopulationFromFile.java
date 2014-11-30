@@ -64,7 +64,7 @@ public class GetPopulationFromFile extends GAPopulationInitialization
 		
 		// Initialize individuals
 		//TODO:Jisha Need to read the data from file here
-		for(int i=0; i<individualsNumber; i++) 
+		for(int i=0; i<3; i++) 
 		{
 			GAIndividual gi = new GAIndividual();
 			gi.variables = new double[10];
@@ -76,6 +76,7 @@ public class GetPopulationFromFile extends GAPopulationInitialization
 			
 			newPopulation.individuals[i] = gi;
 			
+			System.out.println(fitness.getClass());
 			
 			fitness.evaluate(newPopulation.individuals[i]); 
 		}
@@ -85,7 +86,8 @@ public class GetPopulationFromFile extends GAPopulationInitialization
 		newPopulation.areIndividualsSortedByFitness = false;
 		//      newPopulation.calculateGlobalPopulationFitness();
 		newPopulation.updateBestIndividual();
-		newPopulation.entropy = newPopulation.calculateEntropy();
+		//newPopulation.entropy = newPopulation.calculateEntropy();
+		newPopulation.entropy = 0;
 		newPopulation.feedbackCurrentScalingFactor = 0.8;
 		return newPopulation;
 	} 

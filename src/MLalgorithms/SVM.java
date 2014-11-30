@@ -14,7 +14,7 @@ public class SVM {
 		svm();
 	}
 	
-	public static void svm() throws Exception{
+	public static double svm() throws Exception{
 		
 //		CSVLoader loader = new CSVLoader();
 //		loader.setSource(new File("/Users/jishavm/Documents/datasets/dataset6.csv"));
@@ -25,8 +25,8 @@ public class SVM {
 //		SMOreg smoreg = new SMOreg();
 //		smoreg.buildClassifier(data);
 		
-		String trainFilePath = "C:\\Users\\AbyM\\Dropbox\\Statistical Discovery and Learning\\Datasubsets\\RandomFeatureSet13Train.csv";
-		String testFilePath = "C:\\Users\\AbyM\\Dropbox\\Statistical Discovery and Learning\\Datasubsets\\RandomFeatureSet13Test.csv";
+		String trainFilePath = "/Users/jishavm/Downloads/RandomFeatureSet13Train.csv";
+		String testFilePath = "/Users/jishavm/Downloads/RandomFeatureSet13Test.csv";
 				
 		try {
 			
@@ -55,11 +55,13 @@ public class SVM {
 			Evaluation evaluation = new Evaluation(testData);
 			evaluation.evaluateModel(model, testData);
 			System.out.println(evaluation.correlationCoefficient());
+			return evaluation.correlationCoefficient();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return 0;
 	}
 
 }

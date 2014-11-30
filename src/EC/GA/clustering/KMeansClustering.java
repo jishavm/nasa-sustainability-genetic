@@ -6,21 +6,9 @@ import java.util.*;
 
 public class KMeansClustering extends GAClustering
 {
-	public static void main() throws Exception{
-		GAPopulation p = new GAPopulation(5);
-		for(int i=0;i<5;i++){
-			GAIndividual gi = new GAIndividual();
-			gi.variables = new double[10];
-			for(int m=0;m<10;m++){
-				gi.variables[m] = 1;
-			}
-			gi.fitness = 0.5;
-			gi.scalingFactor = 0.6;
-			
-		}
-		//Clustering(p,1,1);
+	
 		
-	}
+	
 
 	
 	public int Clustering(GAPopulation population, int setpoint, int generation) 
@@ -149,7 +137,7 @@ public class KMeansClustering extends GAClustering
 		//		distances[i][j] = population.individuals[i].distanceTo(population.individuals[j]);
 				
 		// initialization (Random) Partition
-		int numberOfEntries = (int)Math.floor(population.individuals.length/K);
+		int numberOfEntries =(int)Math.floor(population.individuals.length/K);
 		cards[K-1] = population.individuals.length;
 		for(int k=0; k<K-1; k++)
 		{
@@ -164,6 +152,7 @@ public class KMeansClustering extends GAClustering
 		for(int k=0; k<K; k++)
 			for(int j=0; j<population.individuals[0].variables.length; j++)
 			{
+				System.out.println(cards[k]);
 				for(int i=0; i<cards[k]; i++)
 					sums[k].variables[j] = sums[k].variables[j]+population.individuals[clusters[k][i]].variables[j];
 				center[k].variables[j] = sums[k].variables[j]/cards[k];

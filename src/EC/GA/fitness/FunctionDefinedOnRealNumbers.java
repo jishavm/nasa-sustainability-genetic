@@ -59,7 +59,7 @@ public class FunctionDefinedOnRealNumbers extends GAFitness
     */
    private double fitnessFunction(double[] x) 
    {
-      int fitnessFunctionSelector = 1; //<user>
+      int fitnessFunctionSelector = 6; //<user>
       double result = 0;
 
       switch(fitnessFunctionSelector)
@@ -79,6 +79,12 @@ public class FunctionDefinedOnRealNumbers extends GAFitness
          case 5:
             result = michalewiczFunction(x);
             break;
+         case 6:
+		try {
+			result = new MLalgorithms.SVM().svm();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
       }
       return result;
    }

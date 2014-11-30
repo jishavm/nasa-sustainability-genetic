@@ -120,7 +120,7 @@ public class GAParametersReader
             
             System.out.println(fitnessTypeReadFromFile);
             //if(fitnessTypeReadFromFile<1 || fitnessTypeReadFromFile>1)
-            if(fitnessTypeReadFromFile<1 || fitnessTypeReadFromFile>2) 
+            if(fitnessTypeReadFromFile<1 || fitnessTypeReadFromFile>6) 
             {
                System.out.println("Fitness type in file " + fileName + " is out of range.");
                status = false;

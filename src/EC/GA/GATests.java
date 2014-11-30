@@ -225,6 +225,9 @@ public class GATests
          case FUNCTION_DEFINED_ON_REAL_NUMBERS:
             fitnessType = new FunctionDefinedOnRealNumbers();
             break;
+         case 6:
+         	fitnessType = new FunctionDefinedOnRealNumbers(); 
+         	break;
          default:
             fitnessType = null;
       }
