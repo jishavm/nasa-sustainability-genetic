@@ -59,7 +59,8 @@ public class GaussianMutation extends GAMutation
 			for(int j=0; j<population.individuals[i].variables.length; j++) 
 				if(random.nextDouble() < mutationRate) 
 				{
-					population.individuals[i].variables[j] = population.individuals[i].variables[j] + sigma*random.nextGaussian();
+					population.individuals[i].variables[j] = Math.round(population.individuals[i].variables[j] + sigma*random.nextGaussian());
+					//population.individuals[i].variables[j] = population.individuals[i].variables[j] + sigma*random.nextGaussian();
 					//if(population.individuals[i].variables[j] < FunctionDefinedOnRealNumbers.x_i[j])
 					//   population.individuals[i].variables[j] = FunctionDefinedOnRealNumbers.x_i[j]; 
 					//else if(population.individuals[i].variables[j] > FunctionDefinedOnRealNumbers.x_f[j])
