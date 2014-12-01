@@ -7,12 +7,12 @@ FitnessType = 6
 IndividualsNumber = 10
 
 # Number of generations
-GenerationsNumber = 5
+GenerationsNumber =  0
 
 # Termination condition for the evolutionary algorithm:
 # 1: GenerationsNumber is interpreted as the number of generations for the algorithm
 # 2: GenerationsNumber is interpreted as the maximum number of generations allowed without change in the fitness for the best individual
-TerminationConditionType = 2
+TerminationConditionType = 1
 
 # Type of population initialization
 # 1: Random
