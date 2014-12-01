@@ -86,10 +86,15 @@ public class GAIndividual
    public void print() 
    {
       //System.out.println("->Variables:");
+ 	  String bit = "";
+
       for(int j=0; j<variables.length; j++)
       {//System.out.println();
-        System.out.println(variables[j]); // Print variables values        
+			bit+=variables[j]+",";
+
+        //System.out.println(variables[j]); // Print variables values        
       }
+      System.out.println(bit);
       //System.out.println("->Scaling Factor (just for self-adaptive crowding): " + scalingFactor);
       //System.out.println("->Fitness: " + fitness);
       System.out.println(fitness);

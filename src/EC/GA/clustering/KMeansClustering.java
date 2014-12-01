@@ -16,28 +16,21 @@ public class KMeansClustering extends GAClustering
 		//int currentNumberOfClusters = setpoint;
 		//performClustering(population,setpoint);
 		System.out.println("Start of clustering");
-		for(int h=0;h<population.individuals.length;h++){
-			String bit = "";
-			for(int f=0;f<population.individuals[h].variables.length;f++){
-				bit+=population.individuals[h].variables[f]+",";
-				}
-			
-			System.out.println(bit);
-		}
+		
 		double[] Deviation = new double[10];
 		double[] Delta = new double[9];
 		int currentNumberOfClusters = 1;
 		boolean isNumberOfClustersFound = false;
 		//int threshold = 10;
 		
-		Deviation[0] = performClustering(population, 1, false);
-		Deviation[1] = performClustering(population, 2, false);
+		Deviation[0] = performClustering(population, 1, true);
+		Deviation[1] = performClustering(population, 2, true);
 		Delta[0] = Deviation[0]-Deviation[1];
 		//System.out.println("delta"+Delta[0]);
 		//for(int k=2; k<2*setpoint; k++)
 		for(int k=2; k<10; k++)
 		{
-			Deviation[k] = performClustering(population, k+1, false);
+			Deviation[k] = performClustering(population, k+1, true);
 			Delta[k-1] = Deviation[k-1]-Deviation[k];
 			//System.out.println("delta"+Delta[k-1]);
 //			if(Delta[k-1]<0.5*threshold & !isNumberOfClustersFound)
@@ -106,6 +99,19 @@ public class KMeansClustering extends GAClustering
 		//for(int k=0; k<2*setpoint; k++)
 			//System.out.println(Deviation[k]);
 		//
+		
+		for(int h=0;h<population.individuals.length;h++){
+			String bit = "";
+			for(int f=0;f<population.individuals[h].variables.length;f++){
+				bit+=population.individuals[h].variables[f]+",";
+				}
+			
+			System.out.println(bit);
+			//System.out.println(population.individuals[h].fitness);
+		}
+		
+		
+		
 		System.out.println(currentNumberOfClusters);
 		return currentNumberOfClusters;		
 	}
@@ -277,8 +283,8 @@ public class KMeansClustering extends GAClustering
 		if(print==true)
 			for(int k=0; k<K; k++)
 			{
-				//System.out.println(cards[k]);
-				//System.out.println(center[k].variables[0]);
+				System.out.println(cards[k]);
+				System.out.println(center[k].variables[0]);
 				best[k] = population.individuals[clusters[k][0]];
 				for(int i=1; i<cards[k]; i++)
 					if(population.individuals[clusters[k][i]].fitness>best[k].fitness)
