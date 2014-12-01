@@ -32,9 +32,15 @@ public class SVM {
 		 *  2. Loop through the featureSet to set the filters of both train and test sets
 		*/
 		
-		String trainFilePath = "C:\\Users\\AbyM\\Dropbox\\Statistical Discovery and Learning\\Datasubsets\\RandomFeatureSet13Train.csv";
-		String testFilePath = "C:\\Users\\AbyM\\Dropbox\\Statistical Discovery and Learning\\Datasubsets\\RandomFeatureSet13Test.csv";
-				
+		//String trainFilePath = "C:\\Users\\AbyM\\Dropbox\\Statistical Discovery and Learning\\Datasubsets\\RandomFeatureSet13Train.csv";
+		//String testFilePath = "C:\\Users\\AbyM\\Dropbox\\Statistical Discovery and Learning\\Datasubsets\\RandomFeatureSet13Test.csv";
+		
+		String trainFilePath = "/Users/jishavm/Downloads/RandomFeatureSet13Train.csv";
+		String testFilePath = "/Users/jishavm/Downloads/RandomFeatureSet13Test.csv";
+		
+		
+		
+		
 		try {
 			
 			CSVLoader loader = new CSVLoader();
@@ -47,7 +53,7 @@ public class SVM {
 		    
 		    for(int i = 0; i < featureSet.length; i++)
 		    {
-		    	if(featureSet[i] == 0)
+		    	if(featureSet[i] < 0.5)
 		    	{
 		    		options[1] += options[1].length() == 0 ? (i+1) : "," + (i+1);	// Set Column numbers to remove
 		    	}

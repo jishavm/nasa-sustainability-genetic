@@ -723,7 +723,7 @@ public class GATests
 //      System.out.println("Mean best individual's partial fitness for each run: " + Statistics.mean(bestPartialFitnessForTest));
 //      System.out.println("Standard deviation of the best individual's partial fitness for each run: " + Statistics.standardDeviation(bestPartialFitnessForTest));
       //System.out.println();
-      //System.out.println("Percentage of runs reaching the optimum fitness: " + 100*numberOfSuccessRuns/numberOfExperiments);
+      System.out.println("Percentage of runs reaching the optimum fitness: " + 100*numberOfSuccessRuns/numberOfExperiments);
    }
 
 }	

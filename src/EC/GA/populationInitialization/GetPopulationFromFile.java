@@ -69,8 +69,9 @@ public class GetPopulationFromFile extends GAPopulationInitialization
 		//TODO:Jisha Need to read the data from file here
 		
 		try {
-			BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\AbyM\\Downloads\\population"));
-			
+			//BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\AbyM\\Downloads\\population"));
+			BufferedReader br = new BufferedReader(new FileReader("/Users/jishavm/Documents/workspace/proj/src/EC/GA/populationInitialization/population"));
+
 			String input = br.readLine();
 			int g=0;
 			
