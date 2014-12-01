@@ -603,7 +603,7 @@ public class GATests
 						isTerminationConditionSatisfied = true;
 					break;
 				case BEST_INDIVIDUAL_CONDITION:
-					if(generationsWithoutChangeInBestIndividualFitness == pr.generationsNumberReadFromFile)
+					if(generationsWithoutChangeInBestIndividualFitness == pr.generationsNumberReadFromFile &&  currentNumberOfClusters == pr.clusterNumberReadFromFile)
 						isTerminationConditionSatisfied = true;
 					break;
 				}            
