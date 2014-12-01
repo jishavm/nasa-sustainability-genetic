@@ -77,9 +77,12 @@ public class GetPopulationFromFile extends GAPopulationInitialization
 			
 			while(input!=null){
 				GAIndividual gi = new GAIndividual();
-				gi.variables = new double[individualsNumber];
-				
 				String attributes[] = input.split(",");
+				gi.variables = new double[attributes.length];
+				
+				
+				System.out.println("ind leng"+gi.variables.length);
+				
 				for(int i=0;i<attributes.length;i++){
 					gi.variables[i] = Double.parseDouble(attributes[i]);
 					

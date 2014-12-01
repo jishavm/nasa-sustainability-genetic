@@ -15,7 +15,7 @@ public class FunctionDefinedOnRealNumbers extends GAFitness
    // The parameters that the user must specify are represented with "<user>" at the beginning of their comment line
    
    /** Dimension of the function, typed by the user */
-   public static final int functionDimension = 10; //<user> 
+   public static final int functionDimension = 33; //<user> 
 
 
 
