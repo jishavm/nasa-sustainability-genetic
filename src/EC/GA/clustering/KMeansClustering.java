@@ -283,12 +283,20 @@ public class KMeansClustering extends GAClustering
 		if(print==true)
 			for(int k=0; k<K; k++)
 			{
-				System.out.println(cards[k]);
-				System.out.println(center[k].variables[0]);
+				//Abhishek formatting sysout to make more sense
+				System.out.println("K = " + K);
+				System.out.println(cards[k] + " & cluster number = " + (k+1));
+				String centerPopulation = "";
+				for(int i = 0; i < center[k].variables.length; i++)
+				{
+					centerPopulation += i != (center[k].variables.length - 1) ? center[k].variables[i] + "," : center[k].variables[i];
+				}
+				System.out.println("Center of the cluster: " + centerPopulation);
 				best[k] = population.individuals[clusters[k][0]];
 				for(int i=1; i<cards[k]; i++)
 					if(population.individuals[clusters[k][i]].fitness>best[k].fitness)
 						best[k] = population.individuals[clusters[k][i]];
+				System.out.println("Local optima for cluster no. " + (k +1) + " for K = " + K + ":");
 				best[k].print();
 			}
 		

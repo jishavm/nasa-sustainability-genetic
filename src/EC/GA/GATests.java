@@ -26,8 +26,20 @@ public class GATests
 
 	/** Constant indicating the maximization of a function defined on real numbers: 1 */
 	public static final int FUNCTION_DEFINED_ON_REAL_NUMBERS = 1;
-
-
+	
+	/** Constant indicating the maximization of a function by running machine learning algorithm, SVM, on it: 2 */
+	public static final int FUNCTION_DEFINED_BY_ML_ALGORITHMS_SVM = 2;
+	
+	/** Constant indicating the maximization of a function by running machine learning algorithm, Decision Tree, on it: 3 */
+	public static final int FUNCTION_DEFINED_BY_ML_ALGORITHMS_DECISION_TREE = 3;
+	
+	
+	// Kinds of machine learning algorithms used in Fitness type
+	/** Constant indicating using the SVM machine learning algorithm: 1 */
+	public static final int SVM_SMOREG = 1;
+	
+	/** Constant indicating using the Decision Tree machine learning algorithm: 2 */
+	public static final int DECISION_TREE_REPTREE = 2;
 
 	// Termination condition type
 
@@ -226,8 +238,11 @@ public class GATests
 		case FUNCTION_DEFINED_ON_REAL_NUMBERS:
 			fitnessType = new FunctionDefinedOnRealNumbers();
 			break;
-		case 6:
-			fitnessType = new FunctionDefinedOnRealNumbers(); 
+		case FUNCTION_DEFINED_BY_ML_ALGORITHMS_SVM:
+			fitnessType = new FunctionDefinedByMLAlgorithms(SVM_SMOREG); 
+			break;
+		case FUNCTION_DEFINED_BY_ML_ALGORITHMS_DECISION_TREE:
+			fitnessType = new FunctionDefinedByMLAlgorithms(DECISION_TREE_REPTREE);
 			break;
 		default:
 			fitnessType = null;
@@ -662,7 +677,7 @@ public class GATests
 		for (int i=0; i<numberOfExperiments;i++)
 		{
 			for(int n=1; n<pr.generationsNumberReadFromFile;n++)
-				System.out.print(NumberOfClusters[i][n]);
+				System.out.print(NumberOfClusters[i][n+1]);
 			System.out.println();
 		}
 

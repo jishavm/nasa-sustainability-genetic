@@ -90,7 +90,7 @@ public class GAIndividual
 
       for(int j=0; j<variables.length; j++)
       {//System.out.println();
-			bit+=variables[j]+",";
+			bit += (j!=variables.length-1) ? variables[j] + "," : variables[j];
 
         //System.out.println(variables[j]); // Print variables values        
       }

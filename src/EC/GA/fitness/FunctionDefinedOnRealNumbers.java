@@ -37,10 +37,7 @@ public class FunctionDefinedOnRealNumbers extends GAFitness
 
    /** Number of discretization intervals for each variable (for ENTROPY OF THE POPULATION calculation) */
    // public static final int[] intervalsNumber = {100, 100, 100, 100, 100, 100, 100, 100, 100, 100}; //<user>
-   public static final int intervalsNumber = 65536; //<user>
-   
-   // HashMap to hold cached values of fitness for featureSets already encountered
-   HashMap<String, Double> precomputedFitness; 
+   public static final int intervalsNumber = 65536; //<user> 
 
 
 
@@ -62,7 +59,7 @@ public class FunctionDefinedOnRealNumbers extends GAFitness
     */
    private double fitnessFunction(double[] x) 
    {
-      int fitnessFunctionSelector = 6; //<user>
+      int fitnessFunctionSelector = 1; //<user>
       double result = 0;
 
       switch(fitnessFunctionSelector)
@@ -82,34 +79,6 @@ public class FunctionDefinedOnRealNumbers extends GAFitness
          case 5:
             result = michalewiczFunction(x);
             break;
-         case 6:
-		try {
-			/*for(int j=0;j<x.length;j++){
-				System.out.println(x[j]);
-
-			}*/
-			String key = "";
-			for (int i = 0; i < x.length; i++)
-			{
-				key += x[i];
-			}
-			
-			if(precomputedFitness != null && precomputedFitness.containsKey(key)){
-				result = precomputedFitness.get(key);
-			}
-			else{
-				if(precomputedFitness == null)
-				{
-					precomputedFitness = new HashMap<String, Double>();
-				}
-				result = new MLalgorithms.SVM().svm(x);
-				precomputedFitness.put(key, result);
-			}
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
       }
       return result;
    }
