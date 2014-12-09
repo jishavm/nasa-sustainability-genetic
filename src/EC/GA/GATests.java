@@ -403,9 +403,9 @@ public class GATests
 		//      catch(IOException ioe) 
 		//      {}
 
+		int totalGenerations = pr.terminationConditionReadFromFile == GENERATIONS_CONDITION ? pr.generationsNumberReadFromFile + 1 : 501;
 
-
-		int[][] NumberOfClusters = new int[numberOfExperiments][pr.generationsNumberReadFromFile+1];
+		int[][] NumberOfClusters = new int[numberOfExperiments][totalGenerations];
 
 		// *** Beginning of the algorithm ***
 		for(int i=0; i<numberOfExperiments; i++)
@@ -418,8 +418,8 @@ public class GATests
 			int setpoint = pr.clusterNumberReadFromFile;
 			int reachSetpoint = 0;
 			//System.out.println("Number of Experiments" + i);
-			//int currentNumberOfClusters = pr.individualsNumberReadFromFile;
-			int currentNumberOfClusters = 5;
+			int currentNumberOfClusters = pr.individualsNumberReadFromFile;
+			//int currentNumberOfClusters = 5;
 
 
 			generation = 1; 
@@ -461,7 +461,7 @@ public class GATests
 			// currentNumberOfClusters = clusteringType.Clustering(currentPopulation, pr.clusterNumberReadFromFile);
 
 			//System.out.println("reachSetpoint"+reachSetpoint);
-			NumberOfClusters[0][1]=clusteringType.Clustering(currentPopulation, pr.clusterNumberReadFromFile, generation);;
+			NumberOfClusters[i][1]=clusteringType.Clustering(currentPopulation, pr.clusterNumberReadFromFile, generation);
 			if(currentNumberOfClusters == pr.clusterNumberReadFromFile)
 				reachSetpoint++;
 
@@ -589,15 +589,6 @@ public class GATests
 					break;
 				}
 
-				if(currentPopulation.bestIndividual.hasSameFitnessAs(bestIndividual))
-					generationsWithoutChangeInBestIndividualFitness++;
-				else
-				{  
-					generationsWithoutChangeInBestIndividualFitness = 0;
-					bestIndividual = currentPopulation.bestIndividual;
-				}
-
-
 				// written by JUN
 				// we need clustering methods here to cluster the population to several clusters
 				// consider using k-means cluster first
@@ -605,6 +596,19 @@ public class GATests
 				currentNumberOfClusters = clusteringType.Clustering(currentPopulation, pr.clusterNumberReadFromFile, generation);
 				if(currentNumberOfClusters == pr.clusterNumberReadFromFile)
 					reachSetpoint++;
+				
+				boolean condition = pr.terminationConditionReadFromFile == GENERATIONS_CONDITION ? 
+						(currentPopulation.bestIndividual.hasSameFitnessAs(bestIndividual)) : 
+							(currentPopulation.bestIndividual.hasSameFitnessAs(bestIndividual)
+									&& (currentNumberOfClusters == pr.clusterNumberReadFromFile));
+				
+				if(condition)
+					generationsWithoutChangeInBestIndividualFitness++;
+				else
+				{  
+					generationsWithoutChangeInBestIndividualFitness = 0;
+					bestIndividual = currentPopulation.bestIndividual;
+				}
 
 				NumberOfClusters[i][generation]=currentNumberOfClusters;
 				//System.out.println("reachSetpoint"+reachSetpoint);
@@ -618,9 +622,13 @@ public class GATests
 						isTerminationConditionSatisfied = true;
 					break;
 				case BEST_INDIVIDUAL_CONDITION:
-					if(generationsWithoutChangeInBestIndividualFitness == pr.generationsNumberReadFromFile )
+					if(generationsWithoutChangeInBestIndividualFitness == pr.generationsNumberReadFromFile || generation == 500 )
 					//&&  currentNumberOfClusters == pr.clusterNumberReadFromFile)
 						isTerminationConditionSatisfied = true;
+					if(generationsWithoutChangeInBestIndividualFitness == pr.generationsNumberReadFromFile)
+					{
+						NumberOfClusters[i][0] = 1;
+					}
 					break;
 				}            
 
@@ -672,15 +680,57 @@ public class GATests
 			//bestIndividualSoFar.print();
 			//System.out.println();
 
-		} // End of for   
-
-		for (int i=0; i<numberOfExperiments;i++)
-		{
-			for(int n=1; n<pr.generationsNumberReadFromFile;n++)
-				System.out.print(NumberOfClusters[i][n+1]);
-			System.out.println();
+		} // End of for
+		
+		if(pr.terminationConditionReadFromFile == GENERATIONS_CONDITION){
+			double overallClusters = 0;
+			
+			for (int i=0; i<numberOfExperiments;i++)
+			{
+				double overallClusterPerGeneration = 0;
+				for(int n=0; n<pr.generationsNumberReadFromFile;n++)
+				{
+					System.out.print(NumberOfClusters[i][n+1]);
+					if(n > (pr.generationsNumberReadFromFile*0.75)){
+						overallClusterPerGeneration += NumberOfClusters[i][n+1];
+					}
+				}
+				System.out.println();
+				System.out.println((overallClusterPerGeneration/(pr.generationsNumberReadFromFile*.25)));
+				overallClusters += (overallClusterPerGeneration/(pr.generationsNumberReadFromFile*.25));
+			}
+			
+			System.out.println((overallClusters/numberOfExperiments));
 		}
+		else{
+			double totalRunsAll = 0;
+			double totalRunsCompleted = 0;
+			int completedCount = 0;
 
+			for (int i=0; i<numberOfExperiments;i++)
+			{
+				int numberOfGenerations = 0;//NumberOfClusters[i].length +1;
+				for(int n=0; n < (NumberOfClusters[i].length - 1); n++)
+				{
+					if(NumberOfClusters[i][n+1] != 0)
+					{
+						numberOfGenerations++;
+					}
+					System.out.print(NumberOfClusters[i][n+1]);
+				}
+				System.out.println();
+				System.out.println(numberOfGenerations);
+				totalRunsAll += numberOfGenerations;
+				if(NumberOfClusters[i][0] == 1)
+				{
+					totalRunsCompleted += numberOfGenerations;
+					completedCount++;
+				}
+			}
+			
+			System.out.println("Average number of generations considering all runs: " + (totalRunsAll/numberOfExperiments));
+			System.out.println("Average number of generations considering only completed runs: " + (totalRunsCompleted/completedCount));
+		}
 
 		// *** End of the algorithm ***
 
