@@ -4,7 +4,7 @@
 FitnessType = 3
 
 # Number of individuals in the population
-IndividualsNumber = 10
+IndividualsNumber = 20
 
 # Number of generations
 GenerationsNumber = 10

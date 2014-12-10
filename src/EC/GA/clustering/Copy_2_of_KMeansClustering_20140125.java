@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Copy_2_of_KMeansClustering_20140125 extends GAClustering
 {
-	public int Clustering(GAPopulation population, int setpoint, int generation)
+	public int Clustering(GAPopulation population, int setpoint, int generation, double[][] clusterFitness)
 	{
 		//int currentNumberOfClusters = setpoint;
 		//performClustering(population,setpoint);

@@ -70,7 +70,7 @@ public class GetPopulationFromFile extends GAPopulationInitialization
 		
 		try {
 			//BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\AbyM\\Downloads\\population"));
-			BufferedReader br = new BufferedReader(new FileReader("data/population_final.txt"));
+			BufferedReader br = new BufferedReader(new FileReader("data/population_new_2.txt"));
 
 			String input = br.readLine();
 			int g=0;

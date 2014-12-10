@@ -32,8 +32,8 @@ public class MLAlgorithms {
 		//String trainFilePath = "C:\\Users\\AbyM\\Dropbox\\Statistical Discovery and Learning\\Datasubsets\\RandomFeatureSet13Train.csv";
 		//String testFilePath = "C:\\Users\\AbyM\\Dropbox\\Statistical Discovery and Learning\\Datasubsets\\RandomFeatureSet13Test.csv";
 		
-		String trainFilePath = "data/Final_Train_5000.csv";
-		String testFilePath = "data/Final_Test_5000.csv";		
+		String trainFilePath = "data/Final_Train_10000.csv";
+		String testFilePath = "data/Final_Test_10000.csv";		
 		
 		try {
 			

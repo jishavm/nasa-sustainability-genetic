@@ -11,7 +11,7 @@ public class KMeansClustering extends GAClustering
 	
 
 	
-	public int Clustering(GAPopulation population, int setpoint, int generation) 
+	public int Clustering(GAPopulation population, int setpoint, int generation, double[][] clusterFitness) 
 	{
 		//int currentNumberOfClusters = setpoint;
 		//performClustering(population,setpoint);
@@ -23,14 +23,14 @@ public class KMeansClustering extends GAClustering
 		boolean isNumberOfClustersFound = false;
 		//int threshold = 10;
 		
-		Deviation[0] = performClustering(population, 1, true);
-		Deviation[1] = performClustering(population, 2, true);
+		Deviation[0] = performClustering(population, 1, true, clusterFitness);
+		Deviation[1] = performClustering(population, 2, true, clusterFitness);
 		Delta[0] = Deviation[0]-Deviation[1];
 		//System.out.println("delta"+Delta[0]);
 		//for(int k=2; k<2*setpoint; k++)
 		for(int k=2; k<10; k++)
 		{
-			Deviation[k] = performClustering(population, k+1, true);
+			Deviation[k] = performClustering(population, k+1, true, clusterFitness);
 			Delta[k-1] = Deviation[k-1]-Deviation[k];
 			//System.out.println("delta"+Delta[k-1]);
 //			if(Delta[k-1]<0.5*threshold & !isNumberOfClustersFound)
@@ -93,7 +93,7 @@ public class KMeansClustering extends GAClustering
 		if(generation == 500)
 			{
 				System.out.println(currentNumberOfClusters);
-				Deviation[currentNumberOfClusters-1] = performClustering(population, currentNumberOfClusters, true);	
+				Deviation[currentNumberOfClusters-1] = performClustering(population, currentNumberOfClusters, true, clusterFitness);	
 			}
 			
 		//for(int k=0; k<2*setpoint; k++)
@@ -116,7 +116,7 @@ public class KMeansClustering extends GAClustering
 		return currentNumberOfClusters;		
 	}
 	
-	public  double performClustering(GAPopulation population, int K, boolean print)
+	public  double performClustering(GAPopulation population, int K, boolean print, double[][] clusterFitness)
 	{
 		// cluster and its entries
 		//System.out.println("reached clustering");
@@ -298,6 +298,16 @@ public class KMeansClustering extends GAClustering
 						best[k] = population.individuals[clusters[k][i]];
 				System.out.println("Local optima for cluster no. " + (k +1) + " for K = " + K + ":");
 				best[k].print();
+				for(int m = 0; m < clusterFitness[K-1].length; m++)
+				{
+					if(m <= k)
+					{
+						clusterFitness[K-1][k] = best[k].fitness;
+					}
+					else{
+						clusterFitness[K-1][m] = -1;
+					}
+				}
 			}
 		
 		return deviation;

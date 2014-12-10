@@ -406,6 +406,8 @@ public class GATests
 		int totalGenerations = pr.terminationConditionReadFromFile == GENERATIONS_CONDITION ? pr.generationsNumberReadFromFile + 1 : 501;
 
 		int[][] NumberOfClusters = new int[numberOfExperiments][totalGenerations];
+		
+		double[][][] generationClusterFitness = new double[numberOfExperiments][pr.generationsNumberReadFromFile][10];
 
 		// *** Beginning of the algorithm ***
 		for(int i=0; i<numberOfExperiments; i++)
@@ -452,7 +454,7 @@ public class GATests
 
 			}
 			offspringPopulation = null; 
-
+			double[][] clusterFitness = new double[10][10];
 
 			// written by JUN
 			// we need clustering methods here to cluster the population to several clusters
@@ -461,7 +463,7 @@ public class GATests
 			// currentNumberOfClusters = clusteringType.Clustering(currentPopulation, pr.clusterNumberReadFromFile);
 
 			//System.out.println("reachSetpoint"+reachSetpoint);
-			NumberOfClusters[i][1]=clusteringType.Clustering(currentPopulation, pr.clusterNumberReadFromFile, generation);
+			NumberOfClusters[i][1]=clusteringType.Clustering(currentPopulation, pr.clusterNumberReadFromFile, generation, clusterFitness);
 			if(currentNumberOfClusters == pr.clusterNumberReadFromFile)
 				reachSetpoint++;
 
@@ -593,19 +595,26 @@ public class GATests
 				// we need clustering methods here to cluster the population to several clusters
 				// consider using k-means cluster first
 				// hope we could use an algorithm to identify clusters of solutions in multimodal optimization written by Ballester and Carter later
-				currentNumberOfClusters = clusteringType.Clustering(currentPopulation, pr.clusterNumberReadFromFile, generation);
+				currentNumberOfClusters = clusteringType.Clustering(currentPopulation, pr.clusterNumberReadFromFile, generation, clusterFitness);
 				if(currentNumberOfClusters == pr.clusterNumberReadFromFile)
 					reachSetpoint++;
 				
 				boolean condition = pr.terminationConditionReadFromFile == GENERATIONS_CONDITION ? 
 						(currentPopulation.bestIndividual.hasSameFitnessAs(bestIndividual)) : 
-							(currentPopulation.bestIndividual.hasSameFitnessAs(bestIndividual)
-									&& (currentNumberOfClusters == pr.clusterNumberReadFromFile));
+							checkChangeInGenerationFitness(pr, bestIndividual,
+									currentPopulation, currentNumberOfClusters, clusterFitness[currentNumberOfClusters-1], optimumFitness);
 				
 				if(condition)
+				{
+					generationClusterFitness[i][generationsWithoutChangeInBestIndividualFitness] = (clusterFitness[currentNumberOfClusters-1]).clone();
 					generationsWithoutChangeInBestIndividualFitness++;
+				}
 				else
 				{  
+					for(int m = 0; m < generationsWithoutChangeInBestIndividualFitness; m++)
+					{
+						generationClusterFitness[i][m] = new double[10];
+					}
 					generationsWithoutChangeInBestIndividualFitness = 0;
 					bestIndividual = currentPopulation.bestIndividual;
 				}
@@ -662,8 +671,18 @@ public class GATests
 			//         time = (double)date.getTime()-time;
 			//         timeForTest[i] = time;
 			generationsForTest[i] = generation;
-			if(bestIndividual.fitness>=optimumFitness)
-				numberOfSuccessRuns++;
+			if(pr.terminationConditionReadFromFile == GENERATIONS_CONDITION)
+			{
+				if(bestIndividual.fitness>=optimumFitness)
+					numberOfSuccessRuns++;
+			}
+			else
+			{
+				if(NumberOfClusters[i][0] == 1)
+				{
+					numberOfSuccessRuns++;
+				}
+			}
 
 			// For Ole's reports
 			//if(areReportsMade)
@@ -704,13 +723,13 @@ public class GATests
 		}
 		else{
 			double totalRunsAll = 0;
-			double totalRunsCompleted = 0;
-			int completedCount = 0;
+			double totalGenerationsInRunsCompleted = 0;
+			int runsCompletedCount = 0;
 
 			for (int i=0; i<numberOfExperiments;i++)
 			{
 				int numberOfGenerations = 0;//NumberOfClusters[i].length +1;
-				for(int n=0; n < (NumberOfClusters[i].length - 1); n++)
+				for(int n = 0; n < (NumberOfClusters[i].length - 1); n++)
 				{
 					if(NumberOfClusters[i][n+1] != 0)
 					{
@@ -720,16 +739,28 @@ public class GATests
 				}
 				System.out.println();
 				System.out.println(numberOfGenerations);
+								
 				totalRunsAll += numberOfGenerations;
-				if(NumberOfClusters[i][0] == 1)
+				if(NumberOfClusters[i][0] != 0)
 				{
-					totalRunsCompleted += numberOfGenerations;
-					completedCount++;
+					totalGenerationsInRunsCompleted += numberOfGenerations;
+					runsCompletedCount++;
+					for(int n = 0; n < generationClusterFitness[i].length; n++)
+					{
+						System.out.println("Generation " + (n + 1) + ":");
+						for(int m = 0; m < generationClusterFitness[i][n].length; m++)
+						{
+							if(generationClusterFitness[i][n][m] != -1)
+							{
+								System.out.println("Cluster " + (m + 1) + ": " + generationClusterFitness[i][n][m]);
+							}
+						}
+					}
 				}
 			}
 			
 			System.out.println("Average number of generations considering all runs: " + (totalRunsAll/numberOfExperiments));
-			System.out.println("Average number of generations considering only completed runs: " + (totalRunsCompleted/completedCount));
+			System.out.println("Average number of generations considering only the "+ runsCompletedCount +" completed runs: " + (totalGenerationsInRunsCompleted/(runsCompletedCount == 0 ? numberOfExperiments : runsCompletedCount)));
 		}
 
 		// *** End of the algorithm ***
@@ -790,6 +821,35 @@ public class GATests
 		//      System.out.println("Standard deviation of the best individual's partial fitness for each run: " + Statistics.standardDeviation(bestPartialFitnessForTest));
 		//System.out.println();
 		System.out.println("Percentage of runs reaching the optimum fitness: " + 100*numberOfSuccessRuns/numberOfExperiments);
+	}
+
+
+
+	private boolean checkChangeInGenerationFitness(GAParametersReader pr,
+			GAIndividual bestIndividual, GAPopulation currentPopulation,
+			int currentNumberOfClusters, double[] clusterFitness, double optimumFitness) {
+		
+		boolean everyClusterFitnessCheck = false;
+		
+		if(currentNumberOfClusters == pr.clusterNumberReadFromFile)
+		{
+			for(double fitness: clusterFitness)
+			{
+				if(fitness != -1)
+				{
+					if(fitness >= optimumFitness)
+					{
+						everyClusterFitnessCheck = true;
+					}
+					else
+					{
+						everyClusterFitnessCheck = false;
+						break;
+					}
+				}
+			}
+		}
+		return everyClusterFitnessCheck;
 	}
 
 }	
