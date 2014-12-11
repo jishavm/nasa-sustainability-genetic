@@ -8,5 +8,5 @@ import java.util.*;
 
 public abstract class GAClustering
 {
-	public abstract int Clustering(GAPopulation population, int K, int generation, double[][] clusterFitness);
+	public abstract int Clustering(GAPopulation population, int K, int generation, double[][][] clusterFitness);
 }//end of GAClustering class

@@ -407,7 +407,7 @@ public class GATests
 
 		int[][] NumberOfClusters = new int[numberOfExperiments][totalGenerations];
 		
-		double[][][] generationClusterFitness = new double[numberOfExperiments][pr.generationsNumberReadFromFile][10];
+		double[][][][] generationClusterFitness = new double[numberOfExperiments][pr.generationsNumberReadFromFile][10][34];	//<no. of Ks in Kmeans><no. of attributes in population + 1 for fitness>
 
 		// *** Beginning of the algorithm ***
 		for(int i=0; i<numberOfExperiments; i++)
@@ -454,7 +454,7 @@ public class GATests
 
 			}
 			offspringPopulation = null; 
-			double[][] clusterFitness = new double[10][10];
+			double[][][] clusterFitness = new double[10][10][34];
 
 			// written by JUN
 			// we need clustering methods here to cluster the population to several clusters
@@ -551,7 +551,7 @@ public class GATests
 				else
 					FeedbackScalingFactor = currentPopulation.feedbackCurrentScalingFactor;
 
-
+				System.out.println("crowding");
 				crowdingType.performCrowding(currentPopulation, offspringPopulation, crossoverType.recombinedParents, crossoverType.childrenIndexPool, setpoint, currentNumberOfClusters, FeedbackScalingFactor);
 
 
@@ -613,7 +613,7 @@ public class GATests
 				{  
 					for(int m = 0; m < generationsWithoutChangeInBestIndividualFitness; m++)
 					{
-						generationClusterFitness[i][m] = new double[10];
+						generationClusterFitness[i][m] = new double[10][34];
 					}
 					generationsWithoutChangeInBestIndividualFitness = 0;
 					bestIndividual = currentPopulation.bestIndividual;
@@ -750,9 +750,9 @@ public class GATests
 						System.out.println("Generation " + (n + 1) + ":");
 						for(int m = 0; m < generationClusterFitness[i][n].length; m++)
 						{
-							if(generationClusterFitness[i][n][m] != -1)
+							if(generationClusterFitness[i][n][m][0] != -1)
 							{
-								System.out.println("Cluster " + (m + 1) + ": " + generationClusterFitness[i][n][m]);
+								System.out.println("Cluster " + (m + 1) + ": " + printOptimalIndividualWithFitness(generationClusterFitness[i][n][m]));
 							}
 						}
 					}
@@ -825,19 +825,30 @@ public class GATests
 
 
 
+	private String printOptimalIndividualWithFitness(double[] ds) {
+		String returnString = "";
+		for(int p = 0; p < ds.length; p++)
+		{
+			returnString = p == (ds.length - 1) ? (returnString.substring(0, (returnString.length() -1)) + " Fitness: " + ds[0]) : returnString + ds[p + 1] + ",";
+		}
+		return returnString;
+	}
+
+
+
 	private boolean checkChangeInGenerationFitness(GAParametersReader pr,
 			GAIndividual bestIndividual, GAPopulation currentPopulation,
-			int currentNumberOfClusters, double[] clusterFitness, double optimumFitness) {
+			int currentNumberOfClusters, double[][] clusterFitness, double optimumFitness) {
 		
 		boolean everyClusterFitnessCheck = false;
 		
 		if(currentNumberOfClusters == pr.clusterNumberReadFromFile)
 		{
-			for(double fitness: clusterFitness)
+			for(double[] fitness: clusterFitness)
 			{
-				if(fitness != -1)
+				if(fitness[0] != -1)
 				{
-					if(fitness >= optimumFitness)
+					if(fitness[0] >= optimumFitness)
 					{
 						everyClusterFitnessCheck = true;
 					}

@@ -43,7 +43,7 @@ public class GeneralizedProbabilisticReplacement extends GACrowding
     */
    public void performReplacement(GAPopulation population1, GAPopulation population2, ArrayList<GAIndividual> parents, ArrayList<Integer> indexPool, int[] permutation, int setpoint, int currentNumberOfClusters, double FeedbackScalingFactor)
    {
-	   System.out.println("crowding");
+	  //System.out.println("crowding");
 
 	  GAIndividual currentParent = new GAIndividual(); 
       GAIndividual currentChild = new GAIndividual(); 

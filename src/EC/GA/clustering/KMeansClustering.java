@@ -11,7 +11,7 @@ public class KMeansClustering extends GAClustering
 	
 
 	
-	public int Clustering(GAPopulation population, int setpoint, int generation, double[][] clusterFitness) 
+	public int Clustering(GAPopulation population, int setpoint, int generation, double[][][] clusterFitness) 
 	{
 		//int currentNumberOfClusters = setpoint;
 		//performClustering(population,setpoint);
@@ -100,15 +100,15 @@ public class KMeansClustering extends GAClustering
 			//System.out.println(Deviation[k]);
 		//
 		
-		for(int h=0;h<population.individuals.length;h++){
-			String bit = "";
-			for(int f=0;f<population.individuals[h].variables.length;f++){
-				bit+=population.individuals[h].variables[f]+",";
-				}
-			
-			System.out.println(bit);
-			//System.out.println(population.individuals[h].fitness);
-		}
+//		for(int h=0;h<population.individuals.length;h++){
+//			String bit = "";
+//			for(int f=0;f<population.individuals[h].variables.length;f++){
+//				bit+=population.individuals[h].variables[f]+",";
+//				}
+//			
+//			System.out.println(bit);
+//			//System.out.println(population.individuals[h].fitness);
+//		}
 		
 		
 		
@@ -116,7 +116,7 @@ public class KMeansClustering extends GAClustering
 		return currentNumberOfClusters;		
 	}
 	
-	public  double performClustering(GAPopulation population, int K, boolean print, double[][] clusterFitness)
+	public  double performClustering(GAPopulation population, int K, boolean print, double[][][] clusterFitness)
 	{
 		// cluster and its entries
 		//System.out.println("reached clustering");
@@ -284,32 +284,46 @@ public class KMeansClustering extends GAClustering
 			for(int k=0; k<K; k++)
 			{
 				//Abhishek formatting sysout to make more sense
-				System.out.println("K = " + K);
-				System.out.println(cards[k] + " & cluster number = " + (k+1));
+				//System.out.println("K = " + K);
+				//System.out.println(cards[k] + " & cluster number = " + (k+1));
 				String centerPopulation = "";
 				for(int i = 0; i < center[k].variables.length; i++)
 				{
 					centerPopulation += i != (center[k].variables.length - 1) ? center[k].variables[i] + "," : center[k].variables[i];
 				}
-				System.out.println("Center of the cluster: " + centerPopulation);
+				//System.out.println("Center of the cluster: " + centerPopulation);
 				best[k] = population.individuals[clusters[k][0]];
 				for(int i=1; i<cards[k]; i++)
 					if(population.individuals[clusters[k][i]].fitness>best[k].fitness)
 						best[k] = population.individuals[clusters[k][i]];
-				System.out.println("Local optima for cluster no. " + (k +1) + " for K = " + K + ":");
-				best[k].print();
+				//System.out.println("Local optima for cluster no. " + (k +1) + " for K = " + K + ":");
+				//best[k].print();
 				for(int m = 0; m < clusterFitness[K-1].length; m++)
 				{
 					if(m <= k)
 					{
-						clusterFitness[K-1][k] = best[k].fitness;
+						clusterFitness[K-1][k] = getBestIndividualWithFitness(best[k]);
 					}
 					else{
-						clusterFitness[K-1][m] = -1;
+						double[] array = new double[best[k].variables.length + 1];
+						for(int p = 0; p < array.length; p++)
+						{
+							array[p] = -1;
+						}
+						clusterFitness[K-1][m] = array;
 					}
 				}
 			}
 		
 		return deviation;
 	}//end of performClustering 
+
+	private double[] getBestIndividualWithFitness(GAIndividual gaIndividual) {
+		double[] returnArray = new double[gaIndividual.variables.length + 1];
+		for(int p = 0; p < returnArray.length; p++)
+		{
+			returnArray[p] = p == 0 ? gaIndividual.fitness : gaIndividual.variables[p -1];
+		}
+		return returnArray;
+	}
 }

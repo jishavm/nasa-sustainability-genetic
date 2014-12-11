@@ -7,7 +7,7 @@ FitnessType = 3
 IndividualsNumber = 20
 
 # Number of generations
-GenerationsNumber = 10
+GenerationsNumber = 7
 
 # Termination condition for the evolutionary algorithm:
 # 1: GenerationsNumber is interpreted as the number of generations for the algorithm
