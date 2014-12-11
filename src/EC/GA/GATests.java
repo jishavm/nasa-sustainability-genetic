@@ -413,7 +413,7 @@ public class GATests
 		for(int i=0; i<numberOfExperiments; i++)
 		{
 
-
+			System.out.println("Start of run " + (i + 1));
 			// Written by JUN 
 			// need to transfer scaling factor from last generation to the current one
 			double FeedbackScalingFactor = pr.initialScalingFactorReadFromFile;
@@ -429,7 +429,8 @@ public class GATests
 			isTerminationConditionSatisfied = false;
 			//         date = new Date();
 			//         time = (double)date.getTime();
-
+			System.out.println("Start of generation " + generation);
+			
 			currentPopulation = populationInitializationType.performInitialization(fitnessType);
 			bestIndividual = currentPopulation.bestIndividual;
 			initialEntropy = currentPopulation.entropy;
@@ -477,7 +478,8 @@ public class GATests
 				//NumberOfClusters[i][generation]=currentNumberOfClusters;
 
 				generation++;
-
+				System.out.println("Start of generation " + generation);
+				
 				// Parent selection (in order to construct the mating pool of individuals)
 				switch(pr.survivorSelectionTypeReadFromFile) 
 				{
