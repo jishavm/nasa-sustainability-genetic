@@ -19,8 +19,9 @@ public class FunctionDefinedByMLAlgorithms extends GAFitness {
 	// HashMap to hold cached values of fitness for featureSets already encountered
 	HashMap<String, Double> precomputedFitness;
 	   
-	public FunctionDefinedByMLAlgorithms(int algorithmType){
+	public FunctionDefinedByMLAlgorithms(int algorithmType, HashMap<String, Double> precomputedFitness){
 		this.algorithmType = algorithmType;
+		this.precomputedFitness = precomputedFitness;
 	}
 
 	/* (non-Javadoc)

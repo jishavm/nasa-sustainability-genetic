@@ -225,7 +225,7 @@ public class GATests
 		ArrayList<Double>[] populationMeanScalingFactor = new ArrayList[numberOfExperiments]; // Stores, for each run, mean scaling factor in the population generation by generation 
 		PrintWriter pw4, pw5;
 		double[] doubleAuxArray4 = new double[numberOfExperiments];
-
+		HashMap<String, Double> precomputedFitness = new HashMap<String, Double>();
 
 		// Read parameters from file 
 		pr = new GAParametersReader(); 
@@ -239,10 +239,10 @@ public class GATests
 			fitnessType = new FunctionDefinedOnRealNumbers();
 			break;
 		case FUNCTION_DEFINED_BY_ML_ALGORITHMS_SVM:
-			fitnessType = new FunctionDefinedByMLAlgorithms(SVM_SMOREG); 
+			fitnessType = new FunctionDefinedByMLAlgorithms(SVM_SMOREG, precomputedFitness); 
 			break;
 		case FUNCTION_DEFINED_BY_ML_ALGORITHMS_DECISION_TREE:
-			fitnessType = new FunctionDefinedByMLAlgorithms(DECISION_TREE_REPTREE);
+			fitnessType = new FunctionDefinedByMLAlgorithms(DECISION_TREE_REPTREE, precomputedFitness);
 			break;
 		default:
 			fitnessType = null;
