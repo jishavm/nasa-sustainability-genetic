@@ -730,6 +730,9 @@ public class GATests
 
 			for (int i=0; i<numberOfExperiments;i++)
 			{
+				System.out.println();
+				System.out.println("RUN NUMBER " + (i + 1));
+				System.out.println();
 				int numberOfGenerations = 0;//NumberOfClusters[i].length +1;
 				for(int n = 0; n < (NumberOfClusters[i].length - 1); n++)
 				{
